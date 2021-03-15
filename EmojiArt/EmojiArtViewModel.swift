@@ -8,15 +8,22 @@
 import SwiftUI
 
 class EmojiArtViewModel: ObservableObject {
+    private static let keyForEmoji = "emoji_untitled"
     static let palette: String = "🍏🍐🍋🍉🍇🍒🍑🍅"
 
     @Published private var emojiArt: EmojiArt = EmojiArt() {
         didSet {
-            print("json: \(emojiArt.)")
+            print("json: \(emojiArt.json?.utf8 ?? "nil")")
+            UserDefaults.standard.set(emojiArt.json, forKey: EmojiArtViewModel.keyForEmoji)
         }
     }
     @Published private(set) var backgroundImage: UIImage?
-    
+
+    init() {
+        emojiArt = EmojiArt(json: UserDefaults.standard.data(forKey: EmojiArtViewModel.keyForEmoji)) ?? EmojiArt()
+        fetchBackgroundImageData()
+    }
+
     var emojis: [EmojiArt.Emoji] {
         emojiArt.emojis
     }

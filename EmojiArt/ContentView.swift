@@ -11,7 +11,7 @@ struct ContentView: View {
 
     private let defaultEmojiSize: CGFloat = 40
 
-    @ObservedObject var document: EmojiArtDocument
+    @ObservedObject var document: EmojiArtViewModel
 
     var body: some View {
         VStack {
@@ -41,7 +41,7 @@ struct ContentView: View {
     private func emojisView() -> some View {
         ScrollView(.horizontal) {
             HStack {
-                ForEach(EmojiArtDocument.palette.map { String($0) }, id: \.self) { emoji in
+                ForEach(EmojiArtViewModel.palette.map { String($0) }, id: \.self) { emoji in
                     Text(emoji).font(Font.system(size: defaultEmojiSize)).onDrag {
                         NSItemProvider(object: emoji as NSString)
                     }
