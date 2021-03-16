@@ -17,19 +17,19 @@ struct ContentView: View {
         VStack {
             emojisView()
             GeometryReader { geometry in
-                Rectangle().foregroundColor(.white).overlay(Group {
-                    if document.backgroundImage != nil {
-                        Image(uiImage: document.backgroundImage!).resizable().aspectRatio(contentMode: ContentMode.fit)
+                ZStack {
+                    Rectangle().foregroundColor(.white).overlay(Group {
+                        OptionalImage(uiImage: document.backgroundImage)
+                    })
+                    ForEach(self.document.emojis) { emoji in
+                        Text(emoji.text).position(position(for: emoji, in: geometry.size)).font(Font.system(size: emoji.fontSize))
                     }
-                }).onDrop(of: ["public.image", "public.text"], isTargeted: nil) { providers, location in
+                }.onDrop(of: ["public.image", "public.text"], isTargeted: nil) { providers, location in
                     var location = geometry.convert(location, from: .global)
                     location = CGPoint(x: location.x - geometry.size.width / 2, y: location.y - geometry.size.height / 2)
                     return drop(providers: providers, at: location)
                 }.edgesIgnoringSafeArea([Edge.Set.bottom, .horizontal])
-
-                ForEach(self.document.emojis) { emoji in
-                    Text(emoji.text).position(position(for: emoji, in: geometry.size)).font(Font.system(size: emoji.fontSize))
-                }
+                    .clipped()
             }
         }
     }

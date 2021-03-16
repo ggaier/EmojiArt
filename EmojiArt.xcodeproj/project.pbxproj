@@ -16,6 +16,7 @@
 		FA23D44025F620B500EC6705 /* EmojiArtViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23D43F25F620B500EC6705 /* EmojiArtViewModel.swift */; };
 		FA23D44325F753A500EC6705 /* EmojiArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23D44225F753A500EC6705 /* EmojiArt.swift */; };
 		FA23D44B25F75F6800EC6705 /* EmojiArtExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23D44A25F75F6800EC6705 /* EmojiArtExtensions.swift */; };
+		FA6E22FA2600C54700E974B2 /* OptionalImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6E22F92600C54700E974B2 /* OptionalImage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		FA23D43F25F620B500EC6705 /* EmojiArtViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtViewModel.swift; sourceTree = "<group>"; };
 		FA23D44225F753A500EC6705 /* EmojiArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArt.swift; sourceTree = "<group>"; };
 		FA23D44A25F75F6800EC6705 /* EmojiArtExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiArtExtensions.swift; sourceTree = "<group>"; };
+		FA6E22F92600C54700E974B2 /* OptionalImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalImage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				FA23D43F25F620B500EC6705 /* EmojiArtViewModel.swift */,
 				FA23D44225F753A500EC6705 /* EmojiArt.swift */,
 				FA23D44A25F75F6800EC6705 /* EmojiArtExtensions.swift */,
+				FA6E22F92600C54700E974B2 /* OptionalImage.swift */,
 			);
 			path = EmojiArt;
 			sourceTree = "<group>";
@@ -159,6 +162,7 @@
 				FA23D44B25F75F6800EC6705 /* EmojiArtExtensions.swift in Sources */,
 				FA23D44325F753A500EC6705 /* EmojiArt.swift in Sources */,
 				FA23D42F25F61FC800EC6705 /* ContentView.swift in Sources */,
+				FA6E22FA2600C54700E974B2 /* OptionalImage.swift in Sources */,
 				FA23D44025F620B500EC6705 /* EmojiArtViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
