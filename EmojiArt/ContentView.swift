@@ -20,17 +20,21 @@ struct ContentView: View {
                 ZStack {
                     Color.white.overlay(Group {
                         OptionalImage(uiImage: document.backgroundImage).scaleEffect(zoomScale)
+                            .offset(panOffset)
                     }).gesture(doubleTabToZoom(in: geometry.size))
                     ForEach(self.document.emojis) {
                         Text($0.text).position(position(for: $0, in: geometry.size))
                             .font(animtableWithSize: $0.fontSize * zoomScale)
                     }
-                }.gesture(zoomGesture())
+                }
+                    .gesture(panGesture())
+                    .gesture(zoomGesture())
                     .edgesIgnoringSafeArea([Edge.Set.bottom, .horizontal])
                     .clipped()
                     .onDrop(of: ["public.image", "public.text"], isTargeted: nil) { providers, location in
                     var location = geometry.convert(location, from: .global)
                     location = CGPoint(x: location.x - geometry.size.width / 2, y: location.y - geometry.size.height / 2)
+                    location = CGPoint(x: location.x - panOffset.width, y: location.y - panOffset.height)
                     location = CGPoint(x: location.x / zoomScale, y: location.y / zoomScale)
                     return drop(providers: providers, at: location)
                 }
@@ -55,10 +59,26 @@ struct ContentView: View {
         }
     }
 
+    @State private var steadyStatePanOffset: CGSize = .zero
+    @GestureState private var gesturePanOffset: CGSize = .zero
+
+    private var panOffset: CGSize {
+        (steadyStatePanOffset + gesturePanOffset) * zoomScale
+    }
+
+    private func panGesture() -> some Gesture {
+        DragGesture().updating($gesturePanOffset) { latestDragGestureValue, gesturePanOffset, transaction in
+            gesturePanOffset = latestDragGestureValue.translation / zoomScale
+        }.onEnded { finalDragGestureValue in
+            steadyStatePanOffset = steadyStatePanOffset + (finalDragGestureValue.translation / zoomScale)
+        }
+    }
+
     private func zoomToFit(_ image: UIImage?, in size: CGSize) {
         if let image = image, image.size.width > 0, image.size.height > 0 {
             let hZoom = size.width / image.size.width
             let vZoom = size.height / image.size.height
+            steadyStatePanOffset = .zero
             steadyStateZoomScale = min(hZoom, vZoom)
         }
     }
@@ -79,6 +99,7 @@ struct ContentView: View {
         var location = emoji.location
         location = CGPoint(x: location.x * zoomScale, y: location.y * zoomScale)
         location = CGPoint(x: location.x + size.width / 2, y: location.y + size.height / 2)
+        location = CGPoint(x: location.x + panOffset.width, y: location.y + panOffset.height)
         return location
     }
 
